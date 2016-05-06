@@ -1,5 +1,5 @@
 {
-  "name": "twitter-name",
+  "name": "twitter-node-name",
   "version": "1.0.0",
   "description": "node version in ma twitter name",
   "main": "index.js",
@@ -11,6 +11,9 @@
     "version",
     "twitter"
   ],
+  "bin": {
+    "twitter-node-name": "index.js"
+  },
   "author": "Irina Shestak",
   "license": "ISC",
   "dependencies": {
