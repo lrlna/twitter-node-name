@@ -1,7 +1,10 @@
 var Twitter = require('twitter')
 var path = require('path')
 var fs = require('fs')
+var util = require('util')
+var Xray = require('x-ray')
 
+var xray = Xray()
 
 var keys = getKeys()
 
@@ -12,10 +15,15 @@ var client = new Twitter({
   access_token_secret: keys.access_token_secret
 })
 
-client.post('account/update_profile', params, function(err, data) {
-  if (err) console.log(err)
+var params = {}
 
-  console.log(`Successfully update profile with ${params.name}`)
+var nodeVersion = getNodeVersion(function (version) {
+  params.name= `ira ${version} ✨`
+  client.post('account/update_profile', params, function(err, data) {
+    if (err) console.log(err)
+
+    console.log(`Successfully updated profile with ${data.name} `)
+  })
 })
 
 function getKeys () {
@@ -24,3 +32,12 @@ function getKeys () {
 
   return JSON.parse(file)
 }
+
+function getNodeVersion (done) {
+  xray('https://nodejs.org/en/', '.home-downloadblock:nth-of-type(2) .home-downloadbutton@data-version')
+  (function (err, data) {
+    if (err) throw err
+    done(data)
+  })
+}
+

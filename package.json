@@ -14,6 +14,7 @@
   "author": "Irina Shestak",
   "license": "ISC",
   "dependencies": {
-    "twitter": "^1.2.5"
+    "twitter": "^1.2.5",
+    "x-ray": "^2.3.0"
   }
 }
