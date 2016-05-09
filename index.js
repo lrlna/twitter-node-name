@@ -5,26 +5,12 @@ var path = require('path')
 var fs = require('fs')
 var util = require('util')
 var Xray = require('x-ray')
-var argv = require('yargs')
-.option('platform', {
-  alias: 'p',
-  describe: 'which platform do you want to do: node or npm',
-  type: 'string'
-})
-.option('file', {
-  alias: 'f',
-  describe: 'provide twitter key file',
-  type: 'string'
-})
-.option('name', {
-  alias: 'n',
-  descrbe: 'provide name to change this too',
-  type: 'string'
-})
+var argv = require('yargs').argv
 
 var xray = Xray()
-var file = argv.file 
-var yourName = argv.name || ""
+var file = argv.f
+var yourName = argv.n
+var platform = argv._[0]
 
 var keys = getKeys(file)
 
@@ -36,12 +22,13 @@ var client = new Twitter({
   access_token_secret: keys.access_token_secret
 })
 
-var nodeVersion = getNodeVersion(argv.platform, function (version) {
+var nodeVersion = getVersion(platform, function (version) {
+  console.log(version)
   params.name= `${yourName} ${version}`
   client.post('account/update_profile', params, function(err, data) {
     if (err) console.log(err)
 
-    console.log(`Successfully updated profile with ${data.name} for ${argv.platform}`)
+    console.log(`Successfully updated profile with ${data.name} for ${platform}`)
   })
 })
 
@@ -55,10 +42,11 @@ function getKeys (file) {
 // get version number based on platform; will default to node version
 function getVersion(platform, done) {
   if (platform === 'npm') {
-    xray('https://docs.npmjs.com/', '#npm-stable-version')
+    xray('https://github.com/npm/npm/blob/master/CHANGELOG.md', '.readme article > :first-child')
     (function (err, data) {
       if (err) throw err
-      done(data)
+      var version = data.split(" ")
+      done(version[0])
     })
   } else {
     xray('https://nodejs.org/en/', '.home-downloadblock:nth-of-type(2) .home-downloadbutton@data-version')
