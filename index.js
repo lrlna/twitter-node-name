@@ -7,12 +7,11 @@ var util = require('util')
 var Xray = require('x-ray')
 var argv = require('yargs').argv
 
-
 var file = argv.f
 var yourName = argv.n
 var platform = argv._[0]
 
-if(isUndefined(platform) || isUndefined(file) || isUndefined(yourName)) {
+if(isUndefined(platform) || isUndefined(file) || isUndefined(yourName) || argv.help) {
   console.log('\x1b[32m',`\t\tUsage :- 
                   $ twitter-node-name -f /path/to/keys/ -n AwesomeName node
                       where,
