@@ -7,11 +7,27 @@ var util = require('util')
 var Xray = require('x-ray')
 var argv = require('yargs').argv
 
-var xray = Xray()
+
 var file = argv.f
 var yourName = argv.n
 var platform = argv._[0]
 
+if(isUndefined(platform) || isUndefined(file) || isUndefined(yourName)) {
+  console.log('\x1b[32m',`\t\tUsage :- 
+                  $ twitter-node-name -f /path/to/keys/ -n AwesomeName node
+                      where,
+                        -n AwesomeName is the name you want to have aside from version,
+                        -f is path to file that holds your twitter keys,
+                        node could be substituted for npm to get the latest version of npm from npm's changelog 
+                          -- it literally grabs the first heading on that changelog page, so there could be mistakes. 
+
+               Examples :- 
+                  $ twitter-node-name -f /path/to/keys/ -n AwesomeName node
+                            OR
+                  $ twitter-node-name -f /path/to/keys/ -n AwesomeName npm`,'\x1b[0m');
+  process.exit(0);
+}
+var xray = Xray()
 var keys = getKeys(file)
 
 var params = {}
@@ -55,4 +71,8 @@ function getVersion(platform, done) {
       done(data)
     })
   }
+}
+
+function isUndefined(value) {
+  return value === undefined;
 }
