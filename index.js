@@ -23,7 +23,14 @@ if(isUndefined(platform) || isUndefined(file) || isUndefined(yourName) || argv.h
                Examples :- 
                   $ twitter-node-name -f /path/to/keys/ -n AwesomeName node
                             OR
-                  $ twitter-node-name -f /path/to/keys/ -n AwesomeName npm`,'\x1b[0m');
+                  $ twitter-node-name -f /path/to/keys/ -n AwesomeName npm
+
+               Help :- 
+                   $ twitter-node-name --help
+                            OR
+                   $ twitter-node-name -help
+                            OR
+                   $ twitter-node-name`,'\x1b[0m');
   process.exit(0);
 }
 var xray = Xray()
