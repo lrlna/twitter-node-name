@@ -5,7 +5,26 @@ var path = require('path')
 var fs = require('fs')
 var util = require('util')
 var Xray = require('x-ray')
-var argv = require('yargs').argv
+var argv = require('yargs')
+.usage('Usage: $0 -n [string] -f [string]')
+.option('f', {
+  alias: 'file',
+  describe: 'File with your Access Tokens',
+  type: 'string',
+  demand: true
+})
+.option('n', {
+  alias: 'name',
+  describe: 'Twitter name of your choosing',
+  type: 'string',
+  demand: true
+})
+.argv
+
+if (!argv.f || !argv.n || !argv._[0]) {
+  require('yargs').showHelp()
+  process.exit()
+}
 
 var xray = Xray()
 var file = argv.f
