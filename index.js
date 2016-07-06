@@ -52,10 +52,17 @@ var nodeVersion = getVersion(platform, function (version) {
 })
 
 function getKeys (file) {
-  var credsFile = path.join(__dirname, file)
-  var file = fs.readFileSync(credsFile)
+  var file = fs.readFileSync(path.join(__dirname, file))
+  var credentials = JSON.parse(file)
 
-  return JSON.parse(file)
+  Object.keys().forEach(credentials, function(key) {
+    if (!credentials[key]) {
+      require('yargs').showHelp("Missing twitter credentials.")
+      process.exit()
+    }
+  })
+
+  return credentials
 }
 
 // get version number based on platform; will default to node version
