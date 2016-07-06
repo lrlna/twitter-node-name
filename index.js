@@ -26,6 +26,11 @@ if (!argv.f || !argv.n || !argv._[0]) {
   process.exit()
 }
 
+if (!argv.f || !argv.n || !argv._[0]) {
+  require('yargs').showHelp()
+  process.exit()
+}
+
 var xray = Xray()
 var file = argv.f
 var yourName = argv.n
