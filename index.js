@@ -6,31 +6,25 @@ var fs = require('fs')
 var util = require('util')
 var Xray = require('x-ray')
 var argv = require('yargs')
-.usage('Usage: $0 -n [string] -f [string]')
-.option('f', {
-  alias: 'file',
-  describe: 'File with your Access Tokens',
-  type: 'string',
-  demand: true
-})
-.option('n', {
-  alias: 'name',
-  describe: 'Twitter name of your choosing',
-  type: 'string',
-  demand: true
-})
-.argv
+  .usage(`Usage :- $0 -f [/path/to/keys/] -n [name] [platform]`)
+  .demand('f','Provide path to file that holds your twitter keys.')
+  .nargs('f',1)
+  .describe('f','Path to file that holds your twitter keys.')
+  .demand('n','Provide a name you want to have aside from version.')
+  .nargs('n',1)
+  .describe('n','Name you want to have aside from version.')
+  .demand(1,'Provide a platform for which you want to change your name')
+  .choices('',['node','npm'])
+  .help('h')
+  .alias('h','help')
+  .epilogue('Found a bug? File an issue at https://github.com/lrlna/twitter-node-name/issues')
+  .argv
 
-if (!argv.f || !argv.n || !argv._[0]) {
-  require('yargs').showHelp()
-  process.exit()
-}
-
-var xray = Xray()
 var file = argv.f
 var yourName = argv.n
 var platform = argv._[0]
 
+var xray = Xray()
 var keys = getKeys(file)
 
 var params = {}
