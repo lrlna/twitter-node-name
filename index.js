@@ -20,6 +20,11 @@ var argv = require('yargs')
   .epilogue('Found a bug? File an issue at https://github.com/lrlna/twitter-node-name/issues')
   .argv
 
+if (!argv.f || !argv.n || !argv._[0]) {
+  require('yargs').showHelp()
+  process.exit()
+}
+
 var file = argv.f
 var yourName = argv.n
 var platform = argv._[0]
