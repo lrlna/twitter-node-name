@@ -54,7 +54,7 @@ function getKeys (file) {
   var file = fs.readFileSync(path.join(__dirname, file))
   var credentials = JSON.parse(file)
 
-  Object.keys().forEach(credentials, function(key) {
+  Object.keys(credentials).forEach(function(key) {
     if (!credentials[key]) {
       require('yargs').showHelp("Missing twitter credentials.")
       process.exit()
